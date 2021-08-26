@@ -1,0 +1,2 @@
+http://localhost:port/context-path/swagger-ui.html
+http://localhost:port/context-path/v2/api-docs
