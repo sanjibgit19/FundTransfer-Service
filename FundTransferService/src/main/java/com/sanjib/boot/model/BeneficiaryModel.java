@@ -9,7 +9,7 @@ import lombok.Data;
 public class BeneficiaryModel {
 	
 	@NotNull(message = "Account Number must have provide")
-	private Integer accountNumber;
+	private Integer beneficiaryAccountNumber;
 	
 	@NotEmpty(message = "Please Enter Account Holder Name")
 	private String accountHolderName;
@@ -19,6 +19,9 @@ public class BeneficiaryModel {
 	
 	@NotEmpty(message = "Please provide Branch Name")
 	private String branchName;
+	
+	@NotNull(message = "Please Enter Bank Account Number")
+	private Integer accountNumber;
 	
 
 }//class

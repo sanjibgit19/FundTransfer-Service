@@ -1,8 +1,13 @@
 package com.sanjib.boot.Entity;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -39,10 +44,9 @@ public class RegistrationEntity {
 	
 	private String password;
 	
-	/*@OneToOne(targetEntity = BankEntity.class,cascade = CascadeType.ALL)
-	@JoinColumn(name = "ACCNO_FK" ,referencedColumnName = "accountNumber")
-	private BankEntity bankEntity;
-	*/
+	@OneToMany(targetEntity = BankEntity.class,cascade = CascadeType.ALL)
+	@JoinColumn(name = "USERID_FK" ,referencedColumnName = "userName")
+	private List<BankEntity> bankEntity;
 	
 
 }//class

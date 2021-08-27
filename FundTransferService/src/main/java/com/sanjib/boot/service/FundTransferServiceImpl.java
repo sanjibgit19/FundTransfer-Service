@@ -28,7 +28,7 @@ public class FundTransferServiceImpl implements FundTransferService {
 	private BeneficiaryRepository beneficiaryRepo;
 
 	@Override
-	public ResponseEntity<ResponseModel> fundTransfer(Integer fromAccNo, Float transferAmount, Integer toAccNo) {
+	public ResponseEntity<ResponseModel> fundTransfer(Integer fromAccNo, Float transferAmount, Integer toAccNo, String userId) {
 		Float fromAccAvailableAmount = null;
 		Float toAccAvailableAmount = null;
 		BankEntity bankEntity = null;
@@ -37,7 +37,7 @@ public class FundTransferServiceImpl implements FundTransferService {
 		try {
 			// Transferring the amount
 			bankEntity = bankRepo.getByAccountNumber(fromAccNo);
-			beneficiaryEntity = beneficiaryRepo.getByAccountNumber(toAccNo);
+			beneficiaryEntity = beneficiaryRepo.getByBeneficiaryAccountNumber(toAccNo);
 			if (bankEntity != null && beneficiaryEntity != null) {
 				// Calculating Balance
 				fromAccAvailableAmount = bankEntity.getInitialBalance();
@@ -75,5 +75,4 @@ public class FundTransferServiceImpl implements FundTransferService {
 		return new ResponseEntity<ResponseModel>(responseModel, HttpStatus.OK);
 	}// fundTransfer(---)
 
-}
-// class
+}// class

@@ -1,5 +1,6 @@
 package com.sanjib.boot.exception;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -7,7 +8,9 @@ import java.util.stream.Collectors;
 
 import javax.persistence.RollbackException;
 import javax.validation.ConstraintViolationException;
+import javax.validation.UnexpectedTypeException;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +38,7 @@ public class AppGlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		ValidationErrorResponse error=new ValidationErrorResponse(4000L, details);
 		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
 	}//handleMethodArgumentNotValid(---)
-	
+	/*
 	@ExceptionHandler(Exception.class)
 	public final ResponseEntity<ApiError> handleAllException(Exception ex, WebRequest request){
 		String errorMessage=ex.getLocalizedMessage();
@@ -43,7 +46,7 @@ public class AppGlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		ResponseEntity<ApiError> responseEntity=new ResponseEntity<ApiError>(error,HttpStatus.BAD_REQUEST);
 		return responseEntity;
 	}//handleException()
-	
+	*/
 	@ExceptionHandler(ConstraintViolationException.class)
 	public final ResponseEntity<ApiError> handleConstraintViolationException(ConstraintViolationException ex, WebRequest request){
 		String errorMessage=ex.getLocalizedMessage();
@@ -76,6 +79,30 @@ public class AppGlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		return responseEntity;
 	}//handleException()
 	
+	@ExceptionHandler(SQLIntegrityConstraintViolationException.class)
+	public final ResponseEntity<ApiError> handleSQLIntegrityConstraintViolationException(SQLIntegrityConstraintViolationException ex, WebRequest request){
+		String errorMessage=ex.getLocalizedMessage();
+		ApiError error=new ApiError(5000L, errorMessage,"Invalid Input" , new Date());
+		ResponseEntity<ApiError> responseEntity=new ResponseEntity<ApiError>(error,HttpStatus.BAD_REQUEST);
+		return responseEntity;
+	}//handleException()
+	@ExceptionHandler(DataIntegrityViolationException.class)
+	public final ResponseEntity<ApiError> handleDataIntegrityViolationException(DataIntegrityViolationException ex, WebRequest request){
+		String errorMessage=ex.getLocalizedMessage();
+		String errormsg="User Bank Account Does Not exits";
+		ApiError error=new ApiError(5000L, errormsg,"Please Add user account" , new Date());
+		ResponseEntity<ApiError> responseEntity=new ResponseEntity<ApiError>(error,HttpStatus.BAD_REQUEST);
+		return responseEntity;
+	}//handleDataIntegrityViolationException()
+	@ExceptionHandler(UnexpectedTypeException.class)
+	public final ResponseEntity<ApiError> handleUnexpectedTypeException(UnexpectedTypeException ex, WebRequest request){
+		String errorMessage=ex.getLocalizedMessage();
+		//String errormsg="User Bank Account Does Not exits";
+		ApiError error=new ApiError(5000L, errorMessage,"Invalid Input" , new Date());
+		ResponseEntity<ApiError> responseEntity=new ResponseEntity<ApiError>(error,HttpStatus.BAD_REQUEST);
+		return responseEntity;
+	}//handleUnexpectedTypeException()
+	
 	@ExceptionHandler(FundTransferNotDoneException.class)
 	public final ResponseEntity<ApiError> handleFundTransferNotDoneException(FundTransferNotDoneException ex, WebRequest request){
 		String errorMessage=ex.getErrorMessage();
@@ -83,7 +110,7 @@ public class AppGlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		ApiError error=new ApiError(5000L, errorMessage,errorReason , new Date());
 		ResponseEntity<ApiError> responseEntity=new ResponseEntity<ApiError>(error,HttpStatus.BAD_REQUEST);
 		return responseEntity;
-	}//handleException()
+	}//handleFundTransferNotDoneException()
 	
 	@ExceptionHandler(BankAccountNotFoundException.class)
 	public final ResponseEntity<ApiError> handleBankAccountNotFoundException(BankAccountNotFoundException ex, WebRequest request){
@@ -93,7 +120,7 @@ public class AppGlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		ApiError error=new ApiError(6000L, errorMessage,errorReason , new Date());
 		ResponseEntity<ApiError> responseEntity=new ResponseEntity<ApiError>(error,HttpStatus.BAD_REQUEST);
 		return responseEntity;
-	}//handleException()
+	}//handleBankAccountNotFoundException()
 	
 	@ExceptionHandler(InsufficientBalanceException.class)
 	public final ResponseEntity<ApiError> handleInsufficientBalanceException(InsufficientBalanceException ex, WebRequest request){
@@ -102,7 +129,7 @@ public class AppGlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		ApiError error=new ApiError(7000L, errorMessage,errorReason , new Date());
 		ResponseEntity<ApiError> responseEntity=new ResponseEntity<ApiError>(error,HttpStatus.BAD_REQUEST);
 		return responseEntity;
-	}//handleException()
+	}//handleInsufficientBalanceException(--)
 	@ExceptionHandler(LimitExitException.class)
 	public final ResponseEntity<ApiError> handleLimitExitException(LimitExitException ex, WebRequest request){
 		String errorMessage=ex.getErrorMessage();
@@ -110,7 +137,7 @@ public class AppGlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		ApiError error=new ApiError(8000L, errorMessage,errorReason , new Date());
 		ResponseEntity<ApiError> responseEntity=new ResponseEntity<ApiError>(error,HttpStatus.BAD_REQUEST);
 		return responseEntity;
-	}//handleException()
+	}//handleLimitExitException(--)
 
 
 }// class

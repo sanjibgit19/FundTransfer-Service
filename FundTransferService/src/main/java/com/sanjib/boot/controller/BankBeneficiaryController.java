@@ -27,28 +27,18 @@ public class BankBeneficiaryController {
 	private BankBeneficiaryService bankBeneficiaryService;
 	
 	@PostMapping(value = "/beneficiary", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResponseModel> addBeneficiary(@Valid @RequestBody BeneficiaryModel beneficiaryModel){
-		ResponseEntity<ResponseModel> responseEntity=null;
-		try {
+	public ResponseEntity<?> addBeneficiary(@Valid @RequestBody BeneficiaryModel beneficiaryModel){
+		ResponseEntity<?> responseEntity=null;
 			responseEntity=bankBeneficiaryService.addBeneficiary(beneficiaryModel);
 			log.info("Service Call Done");
-		} catch (Exception e) {
-			e.printStackTrace();
-			log.error("Exception While Service Call");
-		}
 		return responseEntity;
 	}//addBeneficiary(--)
 	
 	@PostMapping(value = "/bankAccount", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResponseModel> addBankAccount(@Valid @RequestBody BankModel bankModel){
-		ResponseEntity<ResponseModel> responseEntity=null;
-		try {
+	public ResponseEntity<?> addBankAccount(@Valid @RequestBody BankModel bankModel){
+		ResponseEntity<?> responseEntity=null;
 			responseEntity=bankBeneficiaryService.addBankAccount(bankModel);
 			log.info("Service Call Done");
-		} catch (Exception e) {
-			e.printStackTrace();
-			log.error("Exception While Service Call");
-		}
 		return responseEntity;
 	}//addBankAccount(-)
 

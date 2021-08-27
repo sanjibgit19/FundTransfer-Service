@@ -13,6 +13,7 @@ import com.sanjib.boot.model.BankModel;
 import com.sanjib.boot.model.BeneficiaryModel;
 import com.sanjib.boot.repository.BankRepository;
 import com.sanjib.boot.repository.BeneficiaryRepository;
+import com.sanjib.boot.util.ResponseMessage;
 import com.sanjib.boot.util.ResponseModel;
 
 import lombok.extern.slf4j.Slf4j;
@@ -29,11 +30,14 @@ public class BankBeneficiaryServiceImpl implements BankBeneficiaryService {
 	
 	@Transactional
 	@Override
-	public ResponseEntity<ResponseModel> addBeneficiary(BeneficiaryModel beneficiaryModel) {
+	public ResponseEntity<?> addBeneficiary(BeneficiaryModel beneficiaryModel) {
 		ResponseModel responseModel=null;
 		BeneficiaryEntity beneficiaryEntity=null;
 		BeneficiaryEntity beneficiaryEntity2=null;
 		try {
+			/*if(bankRepo.existsByAccountNumber(beneficiaryModel.getBankAccountNum())) {
+				return ResponseEntity.badRequest().body(new ResponseMessage("Bank Acoount Not Exits"));
+			}//if*/
 			//copying model to entity 
 			beneficiaryEntity=new BeneficiaryEntity();
 			BeanUtils.copyProperties(beneficiaryModel, beneficiaryEntity);
@@ -43,7 +47,7 @@ public class BankBeneficiaryServiceImpl implements BankBeneficiaryService {
 				responseModel=new ResponseModel();
 				responseModel.setStatusCode(200);
 				responseModel.setSuccMsg("Beneficiary Added Successfully");
-				responseModel.setAccountNumber(beneficiaryEntity2.getAccountNumber());
+				responseModel.setAccountNumber(beneficiaryEntity2.getBeneficiaryAccountNumber());
 			} else {
 				responseModel=new ResponseModel();
 				responseModel.setStatusCode(400);
@@ -60,18 +64,21 @@ public class BankBeneficiaryServiceImpl implements BankBeneficiaryService {
 
 	@Transactional
 	@Override
-	public ResponseEntity<ResponseModel> addBankAccount(BankModel bankModel) {
+	public ResponseEntity<?> addBankAccount(BankModel bankModel) {
 		ResponseModel responseModel=null;
 		BankEntity bankEntity=null;
 		BankEntity bankEntity2=null;
 		try {
+			if(bankRepo.existsByAccountNumber(bankModel.getAccountNumber())) {
+				return ResponseEntity.badRequest().body(new ResponseMessage("Bank Acoount already exits"));
+			}//if
 			//copying model to entity 
 			bankEntity=new BankEntity();
 			BeanUtils.copyProperties(bankModel, bankEntity);
 			bankEntity.setInitialBalance(30000F);
 			bankEntity2=bankRepo.save(bankEntity);
 			if (bankEntity2!=null) {
-				//responseModel=new ResponseModel();
+				responseModel=new ResponseModel();
 				responseModel.setStatusCode(200);
 				responseModel.setSuccMsg("Banck Account Added Successfully");
 				responseModel.setAccountNumber(bankEntity2.getAccountNumber());

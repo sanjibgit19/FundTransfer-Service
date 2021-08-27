@@ -17,4 +17,7 @@ public class BankModel {
 	@NotEmpty(message = "Please provide Branch Name")
 	private String branchName;
 	
+	@NotEmpty(message = "Please Enter UserName")
+	private String userName;
+	
 }//class

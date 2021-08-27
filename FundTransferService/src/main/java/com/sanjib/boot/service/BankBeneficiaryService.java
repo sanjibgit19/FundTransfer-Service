@@ -7,8 +7,8 @@ import com.sanjib.boot.model.BeneficiaryModel;
 import com.sanjib.boot.util.ResponseModel;
 
 public interface BankBeneficiaryService {
-	public ResponseEntity<ResponseModel> addBeneficiary(BeneficiaryModel beneficiaryModel);
+	public ResponseEntity<?> addBeneficiary(BeneficiaryModel beneficiaryModel);
 	
-	public ResponseEntity<ResponseModel> addBankAccount(BankModel bankModel);
+	public ResponseEntity<?> addBankAccount(BankModel bankModel);
 
 }//interface

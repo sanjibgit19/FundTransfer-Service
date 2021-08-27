@@ -12,7 +12,7 @@ import com.sanjib.boot.Entity.BeneficiaryEntity;
 @Repository
 public interface BeneficiaryRepository extends JpaRepository<BeneficiaryEntity, Integer> {
 
-	public BeneficiaryEntity getByAccountNumber(Integer accNO);
+	public BeneficiaryEntity getByBeneficiaryAccountNumber(Integer accNO);
 
 	@Transactional
 	@Modifying

@@ -13,6 +13,8 @@ public interface BankRepository extends JpaRepository<BankEntity, Integer> {
 	
 	public BankEntity getByAccountNumber(Integer accNO);
 	
+	Boolean existsByAccountNumber(Integer accNo);
+	
 	
 	//@Transactional
 	@org.springframework.transaction.annotation.Transactional

@@ -1,5 +1,6 @@
 package com.sanjib.boot.Entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,12 +23,13 @@ import lombok.ToString;
 @Table(name = "beneficiary_tab")
 public class BeneficiaryEntity {
 	
-	@Id
+	/*@Id
 	@GeneratedValue
 	private Integer id;
-	
+	*/
+	@Id
 	@NotNull(message = "Account Number must have provide")
-	private Integer accountNumber;
+	private Integer beneficiaryAccountNumber;
 	
 	@NotEmpty(message = "Please Enter Account Holder Name")
 	private String accountHolderName;
@@ -40,6 +42,10 @@ public class BeneficiaryEntity {
 	
 	@NotNull(message = "Please Enter Balance")
 	private Float initialBalance;
+	
+	@Column(name = "USERACCNO_FK")
+	private Integer accountNumber;
+	
 	
 
 }//class
